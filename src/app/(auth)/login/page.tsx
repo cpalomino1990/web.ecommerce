@@ -4,19 +4,26 @@ import { Alert, Button, Input, } from '@heroui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
 
 const LoginPage = () => {
 
     const [error, setError] = useState<string>();
-    const router = useRouter();
-
+    const router = useRouter()
+    const searchParams = useSearchParams();
 
     const onSubmit = async (data: { email: string; password: string }) => {
 
         try {
             const userId = await signInWithEmailPassword(data.email, data.password);
             sessionStorage.setItem('userId', userId);
-            router.push('home');
+
+            if (searchParams.get('return') === "payment") {
+                router.push('/home/payment')
+            } else {
+                router.push('/home')
+            }
+
         } catch {
             setError("Email or password Invalid.")
         } finally {
@@ -26,7 +33,13 @@ const LoginPage = () => {
 
     const signInGoogle = async () => {
         await signInWithGoogle();
-        router.push('home');
+
+        if (searchParams.get('return') === "payment") {
+            router.push('/home/payment')
+        } else {
+            router.push('/home')
+        }
+
     }
 
 

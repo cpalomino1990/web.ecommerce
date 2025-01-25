@@ -1,12 +1,21 @@
 'use client'
 import { CartItem, StoreContext } from '@/context/home.context';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 const StoreProvider = ({ children }: { children: React.ReactNode }) => {
+
     const [cart, setCart] = useState<CartItem[]>([]);
+    useEffect(() => {
+        const defaultCart = JSON.parse(window.localStorage.getItem('cart') || '[]');
+        console.log('defaultCart', defaultCart)
+        setCart(defaultCart);
+    }, []);
+
+    useEffect(() => {
+        window.localStorage.setItem('cart', JSON.stringify(cart));
+    }, [cart]);
 
     const addToCart = (item: CartItem) => {
-
         setCart((prevCart) => {
             const existingItem = prevCart.find((cartItem) => cartItem.id === item.id);
             if (existingItem) {
@@ -42,13 +51,18 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         return cart.reduce((count, item) => count + item.quantity, 0);
     };
 
+    const getCartTotal = () => {
+        return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    };
+
     return (
         <StoreContext.Provider
             value={{
                 cart,
                 addToCart,
                 getCartCount,
-                removeFromCart
+                removeFromCart,
+                getCartTotal
             }}>
             {children}
         </StoreContext.Provider>

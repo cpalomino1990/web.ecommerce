@@ -1,31 +1,31 @@
 'use client'
-
 import { useStoreContext } from "@/context/home.context";
+import { auth } from "@/lib/auth";
 import { Button, Card, CardBody, Divider, Image, } from "@heroui/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-
-
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const CheckoutPage = () => {
 
-  const { cart, removeFromCart } = useStoreContext();
-  const [subTotal, setSubTotal] = useState<number>(0);
+  const { cart, removeFromCart, getCartTotal } = useStoreContext();
   const router = useRouter();
+  const [user] = useAuthState(auth);
 
   const USDollar = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   });
 
-  useEffect(() => {
-    const subTotale = cart.reduce((total, item) => total + item.price * item.quantity, 0);
-    setSubTotal(subTotale);
-  }, [cart])
+
 
   const handlePayment = () => {
-    router.push("/login?return=payment")
+
+    if (!user) {
+      router.push("/login?return=payment")
+    } else {
+      router.push("/home/payment")
+    }
   }
 
 
@@ -50,7 +50,7 @@ const CheckoutPage = () => {
   return (
 
     <div className="flex flex-col w-full  px-32 py-20 gap-1">
-      <h2 className="text-3xl flex font-semibold mb-10  text-pink" > Checkout</h2>
+      <h2 className="text-3xl flex font-semibold mb-10  text-pink" > Cart Items</h2>
 
       <div className="flex w-full gap-10">
 
@@ -107,7 +107,7 @@ const CheckoutPage = () => {
 
               <div className="flex w-full justify-between">
                 <p className="text-lg">Sub-total</p>
-                <p className="text-lg ">{USDollar.format(subTotal)}</p>
+                <p className="text-lg ">{USDollar.format(getCartTotal())}</p>
               </div>
 
               <div className="flex w-full justify-between">
@@ -117,13 +117,8 @@ const CheckoutPage = () => {
 
 
               <div className="flex w-full justify-between">
-
-
-
                 <p className="text-xl font-bold">Total</p>
-                <p className="text-xl font-bold">{USDollar.format(subTotal)}</p>
-
-
+                <p className="text-xl font-bold">{USDollar.format(getCartTotal())}</p>
               </div>
 
               <div className="gap-3 flex flex-col pt-10">
