@@ -12,6 +12,7 @@ const layout = ({
         <StoreProvider>
             <div className='h-screen bg-[#f9fbfc]'>
                 <NavarTop />
+
                 <div>{children}</div>
             </div>
         </StoreProvider>

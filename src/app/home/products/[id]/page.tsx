@@ -5,12 +5,27 @@ import { Icon } from '@iconify/react/dist/iconify.js';
 import { Card, Image, Tab, Tabs } from "@heroui/react";
 import { Product } from '@/models/product';
 import { getProduct } from '@/lib/products';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import { useStoreContext } from '@/context/home.context';
 
 const ProductDetailPage = () => {
 
     const [product, setProduct] = useState<Product | null>(null)
     const { id } = useParams();
+    const router = useRouter();
+    const { addToCart } = useStoreContext();
+
+    const handleAddToCart = () => {
+        if (product) {
+            addToCart({
+                id: product.id,
+                name: product.name,
+                quantity: 1,
+                price: product.price,
+                imageUrl: product.imageUrl
+            })
+        }
+    }
 
 
     useEffect(() => {
@@ -23,18 +38,15 @@ const ProductDetailPage = () => {
         return () => { }
     }, [])
 
-
-
-
     const colors = ["danger"];
 
     return (
         <div className='flex flex-col gap-5  px-80 pt-32'>
 
-            <Button className='w-32' radius='full' color="danger" startContent={<Icon icon="mingcute:arrow-left-fill" />} variant="bordered">
-                <a href='/home'>
-                    Back
-                </a>
+            <Button onPress={() => router.push('/home')} className='w-32' radius='full' color="danger" startContent={<Icon icon="mingcute:arrow-left-fill" />} variant="bordered">
+
+                Back
+
             </Button>
 
             <div className='flex flex-row gap-7'>
@@ -43,10 +55,10 @@ const ProductDetailPage = () => {
                     <Card shadow='lg' className="">
                         <Image
                             alt="Card background"
-                            className="object-cover rounded-xl"
+                            className="object-contain rounded-xl"
                             src={product?.imageUrl || '/images/empty-img.png'}
                             width="100%"
-                            height="100%"
+                            height={700}
                         />
 
                     </Card>
@@ -73,9 +85,9 @@ const ProductDetailPage = () => {
                             </Tabs>
                         ))}
                     </div>
-                    <div className='flex ' >
-                        <Button className='mr-12  ' color='primary'>Add to Cart</Button>
-                        <Button color='secondary'>Buy</Button>
+                    <div className='flex mt-5' >
+                        <Button onPress={() => handleAddToCart()} className='mr-12  w-full ' color='primary'>Add to Cart</Button>
+
                     </div>
                 </div>
             </div >

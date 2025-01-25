@@ -10,7 +10,6 @@ import { useStoreContext } from '@/context/home.context'
 
 const NavarTop = () => {
     const [user] = useAuthState(auth);
-    console.log('user', user);
     const router = useRouter();
 
     const { getCartCount } = useStoreContext();
@@ -18,8 +17,12 @@ const NavarTop = () => {
 
     return (
         <Navbar position='sticky' className='bg-white'>
-            <NavbarBrand>
-                <p className="text-primary font-bold text-4xl text-inherit">Lisa</p>
+            <NavbarBrand onClick={() => router.push('/home')}>
+
+                <p className="text-primary cursor-pointer hover:text-secondary font-bold text-4xl text-inherit">
+
+                    Lisa
+                </p>
             </NavbarBrand>
 
             <NavbarContent as="div" justify="end">
@@ -58,7 +61,8 @@ const NavarTop = () => {
                 }
             </NavbarContent>
             <button
-                className="hover:bg-slate-200/20 rounded-full p-2 text-white flex items-center gap-1 " onClick={() => router.push("home/checkout")}
+                className="hover:bg-slate-200/20 rounded-full p-2 text-white flex items-center gap-1 "
+                onClick={() => router.push("/home/checkout")}
             > <div className='text-primary cursor-pointer '  ><ShoppingCartIcon /></div>
                 <span className=" bg-secondary p-1 text-xs  w-6 h-6 rounded-[50%] ">
                     {getCartCount()}

@@ -21,6 +21,23 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
         });
     };
 
+    const removeFromCart = (itemId: string) => {
+        setCart((prevCart) => {
+            const existingItem = prevCart.find((cartItem) => cartItem.id === itemId);
+            if (!existingItem) return prevCart;
+
+            if (existingItem.quantity > 1) {
+                return prevCart.map((cartItem) =>
+                    cartItem.id === itemId
+                        ? { ...cartItem, quantity: cartItem.quantity - 1 }
+                        : cartItem
+                );
+            } else {
+                return prevCart.filter((cartItem) => cartItem.id !== itemId);
+            }
+        });
+    };
+
     const getCartCount = () => {
         return cart.reduce((count, item) => count + item.quantity, 0);
     };
@@ -30,7 +47,8 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
             value={{
                 cart,
                 addToCart,
-                getCartCount
+                getCartCount,
+                removeFromCart
             }}>
             {children}
         </StoreContext.Provider>

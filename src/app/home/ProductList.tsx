@@ -72,7 +72,7 @@ const ProductList = ({ products }: { products: Product[] }) => {
 
 
     return (
-        <div className=' w-full gap-10 grid grid-cols-4 px-32'>
+        <div className=' w-full gap-10 grid grid-cols-1 md:grid-cols-4 px-5 md:px-60'>
             {
                 products.map((product) => (
                     <ProductItem product={product} key={product.id} />

@@ -47,8 +47,8 @@ const ProductItem = ({ product }: { product: Product }) => {
                     <b className="text-default-500 text-lg">    {`$ ${product.price}`}</b>
                     <div className='flex justify-between w-full gap-3'>
 
-                        <Button color='primary' className='w-full'>Buy</Button>
-                        <Button onPress={() => handleAddToCart()} color='secondary' className='w-full'>Add to cart</Button>
+                        {/* <Button color='primary' className='w-full'>Buy</Button> */}
+                        <Button onPress={() => handleAddToCart()} color='primary' className='w-full'>Add to cart</Button>
                     </div>
                 </CardFooter>
             </Card>

@@ -8,7 +8,7 @@ export const getProducts = async (): Promise<{ data: Product[]; lastVisible: num
     try {
 
         const productsRef = collection(db, "products");
-        const firstQuery = query(productsRef, orderBy("name"), limit(6));
+        const firstQuery = query(productsRef, orderBy("name"), limit(20));
 
         try {
             const querySnapshot = await getDocs(firstQuery);
@@ -19,9 +19,6 @@ export const getProducts = async (): Promise<{ data: Product[]; lastVisible: num
             }));
             const lastVisibleDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
             const lastVisible = lastVisibleDoc ? lastVisibleDoc.data().timestamp : 0;
-
-            console.log('Products on this page:', products);
-            console.log('Last visible document:', lastVisible);
 
             return {
                 data: products,
@@ -49,12 +46,10 @@ export const getProduct = async (productId: string): Promise<{ data: Product | n
 
         if (productSnap.exists()) {
             const product = productSnap.data() as Product;
-            console.log('Product:', product);
             return {
                 data: product,
             };
         } else {
-            console.log('No such product!');
             return {
                 data: null
             };

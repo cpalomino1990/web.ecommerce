@@ -1,164 +1,154 @@
 'use client'
 
-import { Image, } from "@heroui/react";
+import { useStoreContext } from "@/context/home.context";
+import { Button, Card, CardBody, Divider, Image, } from "@heroui/react";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 
-const Checkout = () => {
+
+const CheckoutPage = () => {
+
+  const { cart, removeFromCart } = useStoreContext();
+  const [subTotal, setSubTotal] = useState<number>(0);
+  const router = useRouter();
+
+  const USDollar = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  useEffect(() => {
+    const subTotale = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    setSubTotal(subTotale);
+  }, [cart])
+
+  const handlePayment = () => {
+    router.push("/login?return=payment")
+  }
+
+
+  if (cart.length == 0) {
+
+    return (
+      <div className="flex flex-col items-center justify-center w-full px-32 py-20">
+        <Card shadow="none" className="w-2/4 bg-pink-50 flex justify-center border-1 border-pink-100 p-20">
+          <div className="flex  gap-5 flex-col w-full items-center">
+            <Icon className="text-primary opacity-30" style={{ fontSize: "200px" }} icon="mdi:cart-off"></Icon>
+            <p className="text-2xl text-gray-400">   There are  no items in the cart</p>
+            <Button color="primary">Go to Store</Button>
+          </div>
+        </Card>
+
+      </div>
+    )
+  }
+
 
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
-      <h2 className="text-3xl font-semibold mb-6 text-pink" > Checkout</h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {/* Formulario de Dirección */}
-        <div className="bg-white p-6 shadow-md rounded-lg">
-          <h3 className="text-xl font-semibold mb-4">Dirección de Envío</h3>
-          <form>
-            <div className="mb-4">
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">Nombre Completo</label>
-              <input
-                id="name"
-                type="text"
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-                placeholder="Tu nombre completo"
-              />
+    <div className="flex flex-col w-full  px-32 py-20 gap-1">
+      <h2 className="text-3xl flex font-semibold mb-10  text-pink" > Checkout</h2>
+
+      <div className="flex w-full gap-10">
+
+        <Card className="flex flex-col w-full px-10">
+          {/* Resumen del Pedido */}
+          <div className=" p-6 w-full ">
+            <h3 className="text-xl font-semibold mb-8">Resumen del Pedido</h3>
+
+            <div className="grid grid-cols-12 w-fullmb-10 pb-10 font-bold">
+              <p className="col-span-2" ></p>
+              <p className="col-span-5">Product</p>
+              <p className="col-span-2 justify-center flex">Quantity</p>
+              <p className="col-span-2  flex">Sub-total</p>
+              <p></p>
             </div>
 
-            <div className="mb-4">
-              <label htmlFor="address" className="block text-sm font-medium text-gray-700">Dirección</label>
-              <input
-                id="address"
-                type="text"
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-                placeholder="Tu dirección de envío"
-              />
-            </div>
+            {/*  TABLE BODY */}
 
-            <div className="mb-4">
-              <label htmlFor="city" className="block text-sm font-medium text-gray-700">Ciudad</label>
-              <input
-                id="city"
-                type="text"
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-                placeholder="Tu ciudad"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="zip" className="block text-sm font-medium text-gray-700">Código Postal</label>
-              <input
-                id="zip"
-                type="text"
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-                placeholder="Tu código postal"
-              />
-            </div>
-
-            <div className="mb-4">
-              <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Teléfono</label>
-              <input
-                id="phone"
-                type="text"
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm"
-                placeholder="Tu número de teléfono"
-              />
-            </div>
-          </form>
-        </div>
-
-        {/* Resumen del Pedido */}
-        <div className="bg-white p-6 shadow-md rounded-lg">
-          <h3 className="text-xl font-semibold mb-4">Resumen del Pedido</h3>
-          <ul>
-            <li>
-              {/*  {cart.map((product) => (
-                  <li key={product.id} className="flex items-center justify-between py-2 border-b border-gray-200">
-                    Vista previa del producto 
-                    <div className="flex items-center space-x-4">
-                      <img
-                        src='https://static.dafiti.com.co/p/mp-1841-5786842-1-zoom.jpg' // Asegúrate de tener una propiedad 'image' en cada producto
+            {
+              cart.map((item) => (
+                <div key={item.id}>
+                  <div className="grid w-full gap-5 items-center grid-cols-12 ">
+                    <div className="col-span-2 w-full justify-center flex" >
+                      <Image
+                        src={item.imageUrl || '/images/empty-img.png'} // Asegúrate de tener una propiedad 'image' en cada producto
                         alt='Leather Handbag'
-                        className="w-16 h-16 object-cover rounded-md"
+                        // height={100}
+                        width={100}
+                        height={150}
+                        className="border flex justify-center items-center h-full w-full  object-contain rounded-md"
                       />
-                      <div className="flex flex-col">
-                      <span>{'Leather Handbag'}</span>
-                      <span>${1200}</span>
-                      </div>
-                     
-                    </div>*/}
-
-            </li>
-
-
-
-            <li className="flex items-center justify-between py-2 border-b border-gray-200">
-              {/* Vista previa del producto */}
-              <div className="flex items-center space-x-4">
-                <Image
-                  src='https://static.dafiti.com.co/p/mp-1841-5786842-1-zoom.jpg' // Asegúrate de tener una propiedad 'image' en cada producto
-                  alt='Leather Handbag'
-                  className="w-16 h-16 object-cover rounded-md"
-                />
-                <div className="flex flex-col">
-                  <span>{'Leather Handbag'}</span>
-                  <span>${1200}</span>
+                    </div>
+                    <p className="col-span-5 text-lg">{item.name}</p>
+                    <p className="col-span-2 justify-center flex font-bold text-md">{item.quantity}</p>
+                    <p className="col-span-2 font-bold text-lg">{`$ ${item.price}`}</p>
+                    <div>
+                      <Button onPress={() => removeFromCart(item.id)} color="danger" variant="bordered" isIconOnly aria-label="Like">
+                        <Icon className="text-lg" icon="fluent:delete-28-filled" />
+                      </Button>
+                    </div>
+                  </div>
+                  <Divider className="my-5" />
                 </div>
 
-              </div>
-
-            </li>
-
-            <li className="flex items-center justify-between py-2 border-b border-gray-200">
-              {/* Vista previa del producto */}
-              <div className="flex items-center space-x-4">
-                <Image
-                  src='https://static.dafiti.com.co/p/mp-1841-5786842-1-zoom.jpg' // Asegúrate de tener una propiedad 'image' en cada producto
-                  alt='Leather Handbag'
-                  className="w-16 h-16 object-cover rounded-md"
-                />
-                <div className="flex flex-col">
-                  <span>{'Leather Handbag'}</span>
-                  <span>${1200}</span>
-                </div>
-
-              </div>
-
-            </li>
-
-            <li className="flex items-center justify-between py-2 border-b border-gray-200">
-              {/* Vista previa del producto */}
-              <div className="flex items-center space-x-4">
-                <Image
-                  src='https://static.dafiti.com.co/p/mp-1841-5786842-1-zoom.jpg' // Asegúrate de tener una propiedad 'image' en cada producto
-                  alt='Leather Handbag'
-                  className="w-16 h-16 object-cover rounded-md"
-                />
-                <div className="flex flex-col">
-                  <span>{'Leather Handbag'}</span>
-                  <span>${1200}</span>
-                </div>
-
-              </div>
-
-            </li>
-
-
-          </ul>
-
-          <div className="flex justify-between mt-4">
-            <span className="font-semibold text-lg">Total</span>
-            <span className="font-semibold text-lg">${123}</span>
+              ))
+            }
           </div>
+        </Card>
 
-          <button className="w-full mt-6 bg-pink-500 text-white py-2 rounded-md hover:bg-pink-600 transition  " >
-            Realizar Pago
-          </button>
+        <div className="flex">
+          <Card className="w-80 h-72">
+            <CardBody className="p-5 flex gap-2 flex-col w-full">
+
+
+              <div className="flex w-full justify-between">
+                <p className="text-lg">Sub-total</p>
+                <p className="text-lg ">{USDollar.format(subTotal)}</p>
+              </div>
+
+              <div className="flex w-full justify-between">
+                <p className="text-lg">Taxes</p>
+                <p className="text-lg ">$ 0</p>
+              </div>
+
+
+              <div className="flex w-full justify-between">
+
+
+
+                <p className="text-xl font-bold">Total</p>
+                <p className="text-xl font-bold">{USDollar.format(subTotal)}</p>
+
+
+              </div>
+
+              <div className="gap-3 flex flex-col pt-10">
+                <Button color="secondary" onPress={() => handlePayment()} className="w-full">
+                  Proceed to payment
+                </Button>
+
+                <Button color="primary" className="w-full">
+                  Continue buy
+                </Button>
+              </div>
+            </CardBody>
+
+          </Card>
         </div>
+
+
+
       </div>
-    </div>
+    </div >
+
+
+
   );
 };
 
-export default Checkout;
+export default CheckoutPage;
 
