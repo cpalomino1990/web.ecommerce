@@ -35,7 +35,7 @@ const ProductItem = ({ product }: { product: Product }) => {
                         radius="lg"
                         shadow="sm"
                         height={400}
-                        src={product.imageUrl || '/images/empty-img.png'}
+                        src={product.imageUrl || '/images/no-image.png'}
                         width="100%"
                     />
                 </CardBody>

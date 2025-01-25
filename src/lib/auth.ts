@@ -1,5 +1,5 @@
 import {
-    createUserWithEmailAndPassword, getAuth, GoogleAuthProvider,
+    createUserWithEmailAndPassword, FacebookAuthProvider, getAuth, GoogleAuthProvider,
     signInWithEmailAndPassword,
     signInWithPopup,
     signOut,
@@ -8,6 +8,7 @@ import {
 } from 'firebase/auth';
 import { firebaseApp } from './firebase';
 import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+
 
 // Inicializa Auth y Firestore
 export const auth = getAuth(firebaseApp);
@@ -49,6 +50,32 @@ export const registerWithEmailPassword = async (
     }
 };
 
+export const registerWithFacebook = async () => { 
+    try {
+        const provider = new FacebookAuthProvider();
+        
+        const credentials = await signInWithPopup(auth, provider);
+
+        const docRef = collection(db, "users");
+        const q = query(docRef, where("email", "==", credentials.user.email));
+
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+            throw new Error('The email address is already in use.');
+        } else {
+            await addDoc(collection(db, 'users'), {
+                name: credentials.user.displayName,
+                email: credentials.user.email,
+            });
+        }
+    }
+    catch {
+        throw new Error('The email address is already in use.');
+    }
+
+}
+
 export const registerWithGoogle = async () => {
 
     try {
@@ -77,7 +104,7 @@ export const registerWithGoogle = async () => {
 export const signInWithGoogle = async () => {
 
     try {
-        const provider = new GoogleAuthProvider();
+        const provider = new FacebookAuthProvider();
         const credentials = await signInWithPopup(auth, provider);
 
         const docRef = collection(db, "users");
@@ -89,8 +116,11 @@ export const signInWithGoogle = async () => {
             await addDoc(collection(db, 'users'), {
                 name: credentials.user.displayName,
                 email: credentials.user.email,
+                
             });
+           
         }
+        console.log({user: credentials.user});
     }
     catch {
         throw new Error('The email address is already in use.');
@@ -107,6 +137,8 @@ export const signInWithEmailPassword = async (
     } catch {
         throw new Error("Error unkown ");
     }
+
+
 }
 
 

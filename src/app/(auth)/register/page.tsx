@@ -2,7 +2,7 @@
 import { Button, Input, Alert } from '@heroui/react'
 import React, { useState } from 'react'
 import { Icon } from "@iconify/react";
-import { registerWithEmailPassword, registerWithGoogle } from '@/lib/auth';
+import { registerWithEmailPassword, registerWithFacebook, registerWithGoogle } from '@/lib/auth';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const RegisterPage = () => {
@@ -13,11 +13,10 @@ const RegisterPage = () => {
 
     const signUpWithGoogle = async () => {
         await registerWithGoogle();
-        if (searchParams.get('return') === "payment") {
-            router.push('/home/payment')
-        } else {
-            router.push('/home')
-        }
+    }
+
+    const signUpWithFacebook = async () => {
+        await registerWithFacebook();
     }
 
     const onSubmit = async (data: { name: string; email: string; password: string }) => {
@@ -50,9 +49,17 @@ const RegisterPage = () => {
 
             <div className='flex w-full'>
                 <Button onPress={() => signUpWithGoogle()} className='w-full' size="lg" color="danger" startContent={
-                    <Icon icon="flat-color-icons:google"></Icon>
+                    <Icon icon="flat-color-icons:google" width="200" height="200"></Icon>
                 } variant="bordered">
                     Google
+                </Button>
+            </div>
+
+            <div className='flex w-full'>
+                <Button onPress={() => signUpWithFacebook()} className='w-full' size="lg" color="danger" startContent={
+                    <Icon icon="fa-brands:facebook-square" width="120" height="150" />
+                } variant="bordered">
+                    facebook
                 </Button>
             </div>
 
