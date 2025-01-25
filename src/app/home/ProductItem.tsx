@@ -4,7 +4,7 @@ import { Button, Card, CardBody, CardFooter, Image } from '@heroui/react'
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { Product } from '@/models/product'
-import { StoreContext, useStoreContext } from '@/context/home.context'
+import { useStoreContext } from '@/context/home.context'
 
 const ProductItem = ({ product }: { product: Product }) => {
 

@@ -1,4 +1,4 @@
-import { collection, doc, getDoc, getDocs, limit, orderBy, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, limit, orderBy, query } from "firebase/firestore";
 import { db } from "./auth";
 import { Product } from "@/models/product";
 
@@ -35,7 +35,7 @@ export const getProducts = async (): Promise<{ data: Product[]; lastVisible: num
                 lastVisible: 0
             };
         }
-    } catch (error) {
+    } catch {
         throw new Error('Error retrieved the products.');
     }
 };
