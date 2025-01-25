@@ -55,7 +55,7 @@ const NavarTop = () => {
                 }
             </NavbarContent>
             <button
-                className="hover:bg-slate-200/20 rounded-full p-2 text-white flex items-center gap-1 " onClick={() => router.push("./home/checkout")}
+                className="hover:bg-slate-200/20 rounded-full p-2 text-white flex items-center gap-1 " onClick={() => router.push("home/checkout")}
             > <div className='text-primary cursor-pointer '  ><ShoppingCartIcon /></div>
                 <span className=" bg-secondary p-1 text-xs  w-6 h-6 rounded-[50%] ">
                     0

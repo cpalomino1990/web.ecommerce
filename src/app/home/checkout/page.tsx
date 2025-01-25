@@ -6,7 +6,7 @@
          
       return (
         <div className="max-w-7xl mx-auto p-6">
-          <h2 className="text-3xl font-semibold mb-6"> Checkout</h2>
+          <h2 className="text-3xl font-semibold mb-6 text-pink" > Checkout</h2>
     
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Formulario de Dirección */}
@@ -72,17 +72,75 @@
                <li>
                {/*  {cart.map((product) => (
                   <li key={product.id} className="flex items-center justify-between py-2 border-b border-gray-200">
-                    Vista previa del producto */}
+                    Vista previa del producto 
                     <div className="flex items-center space-x-4">
                       <img
                         src='https://static.dafiti.com.co/p/mp-1841-5786842-1-zoom.jpg' // Asegúrate de tener una propiedad 'image' en cada producto
                         alt='Leather Handbag'
                         className="w-16 h-16 object-cover rounded-md"
                       />
+                      <div className="flex flex-col">
                       <span>{'Leather Handbag'}</span>
+                      <span>${1200}</span>
+                      </div>
+                     
+                    </div>*/}
+                    
+                 </li>
+
+                 
+               
+                  <li className="flex items-center justify-between py-2 border-b border-gray-200">
+                     {/* Vista previa del producto */}
+                    <div className="flex items-center space-x-4">
+                      <img
+                        src='https://static.dafiti.com.co/p/mp-1841-5786842-1-zoom.jpg' // Asegúrate de tener una propiedad 'image' en cada producto
+                        alt='Leather Handbag'
+                        className="w-16 h-16 object-cover rounded-md"
+                      />
+                      <div className="flex flex-col">
+                      <span>{'Leather Handbag'}</span>
+                      <span>${1200}</span>
+                      </div>
+                     
                     </div>
-                    <span>${1200}</span>
-                  </li>
+                    
+                 </li>     
+
+                 <li className="flex items-center justify-between py-2 border-b border-gray-200">
+                     {/* Vista previa del producto */}
+                    <div className="flex items-center space-x-4">
+                      <img
+                        src='https://static.dafiti.com.co/p/mp-1841-5786842-1-zoom.jpg' // Asegúrate de tener una propiedad 'image' en cada producto
+                        alt='Leather Handbag'
+                        className="w-16 h-16 object-cover rounded-md"
+                      />
+                      <div className="flex flex-col">
+                      <span>{'Leather Handbag'}</span>
+                      <span>${1200}</span>
+                      </div>
+                     
+                    </div>
+                    
+                 </li>     
+              
+                 <li className="flex items-center justify-between py-2 border-b border-gray-200">
+                     {/* Vista previa del producto */}
+                    <div className="flex items-center space-x-4">
+                      <img
+                        src='https://static.dafiti.com.co/p/mp-1841-5786842-1-zoom.jpg' // Asegúrate de tener una propiedad 'image' en cada producto
+                        alt='Leather Handbag'
+                        className="w-16 h-16 object-cover rounded-md"
+                      />
+                      <div className="flex flex-col">
+                      <span>{'Leather Handbag'}</span>
+                      <span>${1200}</span>
+                      </div>
+                     
+                    </div>
+                    
+                 </li>     
+              
                 
               </ul>
     
@@ -91,7 +149,7 @@
                 <span className="font-semibold text-lg">${123}</span>
               </div>
     
-              <button className="w-full mt-6 bg-pink-500 text-white py-2 rounded-md hover:bg-pink-600 transition">
+              <button className="w-full mt-6 bg-pink-500 text-white py-2 rounded-md hover:bg-pink-600 transition  " >
                 Realizar Pago
               </button>
             </div>
