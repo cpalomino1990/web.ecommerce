@@ -1,18 +1,30 @@
 'use client'
 import { Button } from '@heroui/react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Icon } from '@iconify/react/dist/iconify.js';
 import { Card, Image, Tab, Tabs } from "@heroui/react";
+import { Product } from '@/models/product';
+import { getProduct } from '@/lib/products';
+import { useParams } from 'next/navigation';
 
 const ProductDetailPage = () => {
 
-    const product = {
-        id: '1',
-        description: 'Leather Handbag',
-        price: 120.99,
-        category: 'Accessories',
-        image: 'https://static.dafiti.com.co/p/mp-1841-5786842-1-zoom.jpg'
-    }
+    const [product, setProduct] = useState<Product | null>(null)
+    const { id } = useParams();
+
+
+    useEffect(() => {
+
+        const fetchProduct = async () => {
+            const fecthedProduct = await getProduct(id ? id.toString() : "");
+            setProduct(fecthedProduct.data);
+        }
+        fetchProduct();
+        return () => { }
+    }, [])
+
+
+
 
     const colors = ["danger"];
 
@@ -32,7 +44,7 @@ const ProductDetailPage = () => {
                         <Image
                             alt="Card background"
                             className="object-cover rounded-xl"
-                            src="https://heroui.com/images/hero-card-complete.jpeg"
+                            src={product?.imageUrl || '/images/empty-img.png'}
                             width="100%"
                             height="100%"
                         />
@@ -42,13 +54,13 @@ const ProductDetailPage = () => {
 
                 <div className='w-full flex flex-col gap-3 text-gray-700' >
 
-                    <p className='text-4xl '>{product.description}</p>
+                    <p className='text-4xl '>{product?.name}</p>
 
 
-                    <p className='text-2xl font-bold '>{product.price}</p>
+                    <p className='text-2xl font-bold '> {`$ ${product?.price}`}</p>
 
 
-                    <p className='text-lg '>sdfsdf sd fsd fsd fsd fs df sdf sdf sdf sdf sd fsdfsdf</p>
+                    <p className='text-lg '>{product?.description}</p>
 
                     <div className="flex flex-wrap gap-4">
                         {colors.map((color) => (
@@ -65,16 +77,8 @@ const ProductDetailPage = () => {
                         <Button className='mr-12  ' color='primary'>Add to Cart</Button>
                         <Button color='secondary'>Buy</Button>
                     </div>
-
-
-
-
                 </div>
-
-
-
             </div >
-
         </div>
 
     );

@@ -2,13 +2,27 @@
 
 import { Button, Card, CardBody, CardFooter, Image } from '@heroui/react'
 import React from 'react'
-import { Product } from './ProductList'
 import { useRouter } from 'next/navigation'
+import { Product } from '@/models/product'
+import { StoreContext, useStoreContext } from '@/context/home.context'
 
 const ProductItem = ({ product }: { product: Product }) => {
 
+    const { addToCart } = useStoreContext();
+
     const router = useRouter();
 
+    const handleAddToCart = () => {
+        addToCart(
+            {
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                quantity: 1,
+                imageUrl: product.imageUrl
+            }
+        )
+    }
 
     return (
         <div className='flex flex-col'>
@@ -17,36 +31,28 @@ const ProductItem = ({ product }: { product: Product }) => {
                     <Image
                         onClick={() => { router.push(`home/products/${product.id}`) }}
                         alt={product.description}
-                        className="cursor-pointer w-full object-cover h-[140px]"
+                        className="cursor-pointer   w-full object-contain h-[140px]"
                         radius="lg"
                         shadow="sm"
                         height={400}
-                        src={product.image || '/images/empty-img.png'}
+                        src={product.imageUrl || '/images/empty-img.png'}
                         width="100%"
                     />
                 </CardBody>
                 <CardFooter className="text-small flex-col justify-between gap-3">
+                    <div className="flex flex-row justify-center w-full ">
+                        <p className='text-xl text-ellipsis'> {product.name}</p>
 
-                    <div className="flex flex-row w-full justify-between">
-                        <p className='text-xl'>{product.description}</p>
-                        <b className="text-default-500">{product.price}</b>
                     </div>
-
+                    <b className="text-default-500 text-lg">    {`$ ${product.price}`}</b>
                     <div className='flex justify-between w-full gap-3'>
 
                         <Button color='primary' className='w-full'>Buy</Button>
-                        <Button color='secondary' className='w-full'>Add to cart</Button>
-
-
-
+                        <Button onPress={() => handleAddToCart()} color='secondary' className='w-full'>Add to cart</Button>
                     </div>
-
                 </CardFooter>
-
             </Card>
-
         </div>
-
     )
 }
 

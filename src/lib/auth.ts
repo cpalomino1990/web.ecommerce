@@ -11,7 +11,7 @@ import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebas
 
 // Inicializa Auth y Firestore
 export const auth = getAuth(firebaseApp);
-const db = getFirestore(firebaseApp);
+export const db = getFirestore(firebaseApp);
 
 
 
