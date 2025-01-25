@@ -47,9 +47,17 @@ const LoginPage = () => {
 
             <div className='flex w-full'>
                 <Button onPress={() => signInGoogle()} className='w-full' size="lg" color="danger" startContent={
-                    <Icon icon="flat-color-icons:google"></Icon>
+                    <Icon icon="flat-color-icons:google"  width="200" height="200"></Icon>
                 } variant="bordered">
                     Google
+                </Button>
+            </div>
+
+            <div className='flex w-full'>
+                <Button onPress={() => signInGoogle()} className='w-full' size="lg" color="danger" startContent={
+                    <Icon icon="fa-brands:facebook-square" width="120" height="150" />
+                } variant="bordered">
+                    Facebook
                 </Button>
             </div>
             <div className='text-black flex w-full justify-center'>Or</div>

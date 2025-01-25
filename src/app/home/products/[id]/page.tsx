@@ -54,9 +54,10 @@ const ProductDetailPage = () => {
                 < div className='w-full' >
                     <Card shadow='lg' className="">
                         <Image
+                            
                             alt="Card background"
                             className="object-contain rounded-xl"
-                            src={product?.imageUrl || '/images/empty-img.png'}
+                            src={product?.imageUrl || '/images/no-image.png'}
                             width="100%"
                             height={700}
                         />
