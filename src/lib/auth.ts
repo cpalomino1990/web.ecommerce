@@ -9,6 +9,7 @@ import {
 import { firebaseApp } from './firebase';
 import { getFirestore, collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
+
 // Inicializa Auth y Firestore
 export const auth = getAuth(firebaseApp);
 export const db = getFirestore(firebaseApp);
@@ -103,7 +104,7 @@ export const registerWithGoogle = async () => {
 export const signInWithGoogle = async () => {
 
     try {
-        const provider = new GoogleAuthProvider();
+        const provider = new FacebookAuthProvider();
         const credentials = await signInWithPopup(auth, provider);
 
         const docRef = collection(db, "users");
@@ -115,8 +116,11 @@ export const signInWithGoogle = async () => {
             await addDoc(collection(db, 'users'), {
                 name: credentials.user.displayName,
                 email: credentials.user.email,
+                
             });
+           
         }
+        console.log({user: credentials.user});
     }
     catch {
         throw new Error('The email address is already in use.');
@@ -134,7 +138,7 @@ export const signInWithEmailPassword = async (
         throw new Error("Error unkown ");
     }
 
-    
+
 }
 
 
