@@ -77,7 +77,7 @@ const ProductDetailPage = () => {
                         ))}
                     </div>
 
-                    <div className='flex mt-5'>
+                    <div className='flex mt-5 mb-10'>
                         <Button onPress={() => handleAddToCart()} className='w-full' color='primary'>Add to Cart</Button>
                     </div>
                 </div>

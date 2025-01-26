@@ -39,7 +39,7 @@ const ProductItem = ({ product }: { product: Product }) => {
                         width="100%"
                     />
                 </CardBody>
-                <CardFooter className="text-small flex-col justify-between gap-3">
+                <CardFooter className="text-small flex-col bg-pink-50 justify-between gap-3">
                     <div className="flex flex-row justify-center w-full ">
                         <p className='text-xl text-ellipsis'> {product.name}</p>
 

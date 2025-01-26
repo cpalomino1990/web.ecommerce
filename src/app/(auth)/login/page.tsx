@@ -47,14 +47,12 @@ const LoginPage = () => {
         router.push('home');
     }
 
-
-
     return (
-        <div className='flex flex-col gap-2 px-52   md:w-full  ' >
+        <div className='flex flex-col gap-2 px-5  w-full md:w-2/3  ' >
             <div className="text-2xl font-bold text-center mb-5 text-black">
                 Welcome to Lisa!
             </div>
-            <div className="text-xl font-bold text-center mb-5 text-black">
+            <div className="text-xl w-full font-bold text-center mb-5 text-black">
                 Sign in
             </div>
             {
@@ -65,7 +63,7 @@ const LoginPage = () => {
 
             <div className='flex w-full'>
                 <Button onPress={() => signInGoogle()} className='w-full' size="lg" color="danger" startContent={
-                    <Icon icon="flat-color-icons:google"  width="200" height="200"></Icon>
+                    <Icon icon="flat-color-icons:google" width="200" height="200"></Icon>
                 } variant="bordered">
                     Google
                 </Button>
