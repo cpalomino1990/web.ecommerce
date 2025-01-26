@@ -7,7 +7,6 @@ const StoreProvider = ({ children }: { children: React.ReactNode }) => {
     const [cart, setCart] = useState<CartItem[]>([]);
     useEffect(() => {
         const defaultCart = JSON.parse(window.localStorage.getItem('cart') || '[]');
-        console.log('defaultCart', defaultCart)
         setCart(defaultCart);
     }, []);
 

@@ -1,10 +1,12 @@
 'use client'
 
 import { useStoreContext } from "@/context/home.context";
+import { auth } from "@/lib/auth";
 import { Button, Card, CardBody, Divider, Image, } from "@heroui/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 
 
@@ -13,6 +15,7 @@ const CheckoutPage = () => {
   const { cart, removeFromCart } = useStoreContext();
   const [subTotal, setSubTotal] = useState<number>(0);
   const router = useRouter();
+  const [user] = useAuthState(auth)
 
   const USDollar = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -25,7 +28,12 @@ const CheckoutPage = () => {
   }, [cart])
 
   const handlePayment = () => {
-    router.push("/login?return=payment")
+
+    if (user) {
+      router.push("/home/payment")
+    } else {
+      router.push("/login?return=payment")
+    }
   }
 
 
