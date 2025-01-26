@@ -72,14 +72,14 @@ const ProductList = ({ products }: { products: Product[] }) => {
 
 
     return (
-        <div className=' w-full gap-10 grid grid-cols-1 md:grid-cols-4 px-5 md:px-60'>
+        <div className='w-full gap-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 px-5 sm:px-10 md:px-20 lg:px-60'>
             {
                 products.map((product) => (
                     <ProductItem product={product} key={product.id} />
                 ))
             }
         </div>
-    )
+    );
 }
 
 export default ProductList
