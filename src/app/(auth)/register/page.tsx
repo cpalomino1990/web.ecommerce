@@ -3,10 +3,13 @@ import { Button, Input, Alert } from '@heroui/react'
 import React, { useState } from 'react'
 import { Icon } from "@iconify/react";
 import { registerWithEmailPassword, registerWithFacebook, registerWithGoogle } from '@/lib/auth';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const RegisterPage = () => {
 
     const [error, setError] = useState<string>();
+    const searchParams = useSearchParams();
+    const router = useRouter()
 
     const signUpWithGoogle = async () => {
         await registerWithGoogle();
@@ -18,8 +21,14 @@ const RegisterPage = () => {
 
     const onSubmit = async (data: { name: string; email: string; password: string }) => {
         try {
-            // Llamamos a la función de registro de Firebase
+
             await registerWithEmailPassword(data.name, data.email, data.password);
+
+            if (searchParams.get('return') === "payment") {
+                router.push('/home/payment')
+            } else {
+                router.push('/home')
+            }
 
         } catch {
             setError('The email address is already in use.');
@@ -40,7 +49,7 @@ const RegisterPage = () => {
 
             <div className='flex w-full'>
                 <Button onPress={() => signUpWithGoogle()} className='w-full' size="lg" color="danger" startContent={
-                    <Icon icon="flat-color-icons:google"  width="200" height="200"></Icon>
+                    <Icon icon="flat-color-icons:google" width="200" height="200"></Icon>
                 } variant="bordered">
                     Google
                 </Button>
@@ -121,9 +130,7 @@ const RegisterPage = () => {
                     Already have an account? <a href="/login" className="text-purple-600">Sign in</a>
                 </div>
             </form>
-
         </div>
-
     )
 }
 

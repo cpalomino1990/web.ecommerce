@@ -27,7 +27,7 @@ const ProductItem = ({ product }: { product: Product }) => {
     return (
         <div className='flex flex-col'>
             <Card className='hover:scale-105' shadow="sm" >
-                <CardBody className="overflow-visible p-0">
+                <CardBody className="overflow-visible p-0 transition duration-150 ease-in-out" >
                     <Image
                         onClick={() => { router.push(`home/products/${product.id}`) }}
                         alt={product.description}

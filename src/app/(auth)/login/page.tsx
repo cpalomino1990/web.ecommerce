@@ -1,5 +1,5 @@
 'use client'
-import { signInWithEmailPassword, signInWithGoogle } from '@/lib/auth'
+import { signInWithEmailPassword, signInWithGoogle, signInWithFacebook } from '@/lib/auth'
 import { Alert, Button, Input, } from '@heroui/react'
 import { Icon } from '@iconify/react/dist/iconify.js'
 import { useRouter } from 'next/navigation'
@@ -29,6 +29,11 @@ const LoginPage = () => {
         router.push('home');
     }
 
+    const signInFacebook = async () => {
+        await signInWithFacebook();
+        router.push('home');
+    }
+
 
 
     return (
@@ -54,7 +59,7 @@ const LoginPage = () => {
             </div>
 
             <div className='flex w-full'>
-                <Button onPress={() => signInGoogle()} className='w-full' size="lg" color="danger" startContent={
+                <Button onPress={() => signInFacebook()} className='w-full' size="lg" color="danger" startContent={
                     <Icon icon="fa-brands:facebook-square" width="120" height="150" />
                 } variant="bordered">
                     Facebook

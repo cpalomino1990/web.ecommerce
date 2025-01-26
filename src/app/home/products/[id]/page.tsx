@@ -27,7 +27,6 @@ const ProductDetailPage = () => {
         }
     }
 
-
     useEffect(() => {
 
         const fetchProduct = async () => {
@@ -41,39 +40,30 @@ const ProductDetailPage = () => {
     const colors = ["danger"];
 
     return (
-        <div className='flex flex-col gap-5  px-80 pt-32'>
+        <div className='flex flex-col gap-5 px-4 pt-32 md:px-10 lg:px-32 xl:px-80'>
 
             <Button onPress={() => router.push('/home')} className='w-32' radius='full' color="danger" startContent={<Icon icon="mingcute:arrow-left-fill" />} variant="bordered">
-
                 Back
-
             </Button>
 
-            <div className='flex flex-row gap-7'>
+            <div className='flex flex-col lg:flex-row gap-7'>
 
-                < div className='w-full' >
-                    <Card shadow='lg' className="">
+                <div className='w-full lg:w-1/2'>
+                    <Card shadow='lg'>
                         <Image
-                            
                             alt="Card background"
                             className="object-contain rounded-xl"
                             src={product?.imageUrl || '/images/no-image.png'}
                             width="100%"
                             height={700}
                         />
-
                     </Card>
-                </div >
+                </div>
 
-                <div className='w-full flex flex-col gap-3 text-gray-700' >
-
-                    <p className='text-4xl '>{product?.name}</p>
-
-
-                    <p className='text-2xl font-bold '> {`$ ${product?.price}`}</p>
-
-
-                    <p className='text-lg '>{product?.description}</p>
+                <div className='w-full lg:w-1/2 flex flex-col gap-3 text-gray-700'>
+                    <p className='text-3xl sm:text-4xl'>{product?.name}</p>
+                    <p className='text-xl sm:text-2xl font-bold'>{`$ ${product?.price}`}</p>
+                    <p className='text-base sm:text-lg'>{product?.description}</p>
 
                     <div className="flex flex-wrap gap-4">
                         {colors.map((color) => (
@@ -86,17 +76,14 @@ const ProductDetailPage = () => {
                             </Tabs>
                         ))}
                     </div>
-                    <div className='flex mt-5' >
-                        <Button onPress={() => handleAddToCart()} className='mr-12  w-full ' color='primary'>Add to Cart</Button>
 
+                    <div className='flex mt-5'>
+                        <Button onPress={() => handleAddToCart()} className='w-full' color='primary'>Add to Cart</Button>
                     </div>
                 </div>
-            </div >
+            </div>
         </div>
-
     );
 }
 
-
 export default ProductDetailPage
-
