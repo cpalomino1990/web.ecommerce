@@ -1,31 +1,31 @@
 'use client'
+
 import { useStoreContext } from "@/context/home.context";
-import { auth } from "@/lib/auth";
 import { Button, Card, CardBody, Divider, Image, } from "@heroui/react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useRouter } from "next/navigation";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useEffect, useState } from "react";
+
+
 
 const CheckoutPage = () => {
 
-  const { cart, removeFromCart, getCartTotal } = useStoreContext();
+  const { cart, removeFromCart } = useStoreContext();
+  const [subTotal, setSubTotal] = useState<number>(0);
   const router = useRouter();
-  const [user] = useAuthState(auth);
 
   const USDollar = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
   });
 
-
+  useEffect(() => {
+    const subTotale = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    setSubTotal(subTotale);
+  }, [cart])
 
   const handlePayment = () => {
-
-    if (!user) {
-      router.push("/login?return=payment")
-    } else {
-      router.push("/home/payment")
-    }
+    router.push("/login?return=payment")
   }
 
 
@@ -49,101 +49,86 @@ const CheckoutPage = () => {
 
   return (
 
-    <div className="flex flex-col w-full  px-32 py-20 gap-1">
-      <h2 className="text-3xl flex font-semibold mb-10  text-pink" > Checkout</h2>
-
-      <div className="flex w-full gap-10">
-
-        <Card className="flex flex-col w-full px-10">
-          {/* Resumen del Pedido */}
-          <div className=" p-6 w-full ">
-            <h3 className="text-xl font-semibold mb-8">Resumen del Pedido</h3>
-
-            <div className="grid grid-cols-12 w-fullmb-10 pb-10 font-bold">
-              <p className="col-span-2" ></p>
-              <p className="col-span-5">Product</p>
-              <p className="col-span-2 justify-center flex">Quantity</p>
-              <p className="col-span-2  flex">Sub-total</p>
-              <p></p>
-            </div>
-
-            {/*  TABLE BODY */}
-
-            {
-              cart.map((item) => (
-                <div key={item.id}>
-                  <div className="grid w-full gap-5 items-center grid-cols-12 ">
-                    <div className="col-span-2 w-full justify-center flex" >
-                      <Image
-                        src={item.imageUrl || '/images/empty-img.png'} // Asegúrate de tener una propiedad 'image' en cada producto
-                        alt='Leather Handbag'
-                        // height={100}
-                        width={100}
-                        height={150}
-                        className="border flex justify-center items-center h-full w-full  object-contain rounded-md"
-                      />
-                    </div>
-                    <p className="col-span-5 text-lg">{item.name}</p>
-                    <p className="col-span-2 justify-center flex font-bold text-md">{item.quantity}</p>
-                    <p className="col-span-2 font-bold text-lg">{`$ ${item.price}`}</p>
-                    <div>
-                      <Button onPress={() => removeFromCart(item.id)} color="danger" variant="bordered" isIconOnly aria-label="Like">
-                        <Icon className="text-lg" icon="fluent:delete-28-filled" />
-                      </Button>
-                    </div>
-                  </div>
-                  <Divider className="my-5" />
-                </div>
-
-              ))
-            }
+    <div className="flex flex-col w-full px-5 py-10 gap-5 sm:px-8 lg:px-32 lg:py-20">
+    <h2 className="text-3xl font-semibold mb-10 text-pink">Checkout</h2>
+  
+    <div className="flex flex-col lg:flex-row w-full gap-5 lg:gap-10">
+  
+      {/* Resumen del Pedido */}
+      <Card className="flex flex-col w-full px-5 sm:px-10">
+        <div className="p-6 w-full">
+          <h3 className="text-xl font-semibold mb-8">Resumen del Pedido</h3>
+  
+          <div className="grid grid-cols-12 w-full mb-10 pb-10 font-bold text-sm sm:text-base">
+            <p className="col-span-2"></p>
+            <p className="col-span-5">Product</p>
+            <p className="col-span-2 justify-center flex">Quantity</p>
+            <p className="col-span-2 flex">Sub-total</p>
+            <p></p>
           </div>
-        </Card>
-
-        <div className="flex">
-          <Card className="w-80 h-72">
-            <CardBody className="p-5 flex gap-2 flex-col w-full">
-
-
-              <div className="flex w-full justify-between">
-                <p className="text-lg">Sub-total</p>
-                <p className="text-lg ">{USDollar.format(subTotal)}</p>
+  
+          {/* TABLE BODY */}
+          {cart.map((item) => (
+            <div key={item.id}>
+              <div className="grid w-full gap-5 items-center grid-cols-12">
+                <div className="col-span-2 w-full justify-center flex">
+                  <Image
+                    src={item.imageUrl || '/images/empty-img.png'}
+                    alt="Leather Handbag"
+                    width={100}
+                    height={150}
+                    className="border flex justify-center items-center h-full w-full object-contain rounded-md"
+                  />
+                </div>
+                <p className="col-span-5 text-lg">{item.name}</p>
+                <p className="col-span-2 justify-center flex font-bold text-md">{item.quantity}</p>
+                <p className="col-span-2 font-bold text-lg">{`$ ${item.price}`}</p>
+                <div>
+                  <Button onPress={() => removeFromCart(item.id)} color="danger" variant="bordered" isIconOnly aria-label="Like">
+                    <Icon className="text-lg" icon="fluent:delete-28-filled" />
+                  </Button>
+                </div>
               </div>
-
-              <div className="flex w-full justify-between">
-                <p className="text-lg">Taxes</p>
-                <p className="text-lg ">$ 0</p>
-              </div>
-
-
-              <div className="flex w-full justify-between">
-
-
-
-                <p className="text-xl font-bold">Total</p>
-                <p className="text-xl font-bold">{USDollar.format(subTotal)}</p>
-
-
-              </div>
-
-              <div className="gap-3 flex flex-col pt-10">
-                <Button color="secondary" onPress={() => handlePayment()} className="w-full">
-                  Proceed to payment
-                </Button>
-
-                <Button color="primary" className="w-full">
-                  Continue buy
-                </Button>
-              </div>
-            </CardBody>
-
-          </Card>
+              <Divider className="my-5" />
+            </div>
+          ))}
         </div>
-
-
-
+      </Card>
+  
+      {/* Total Section */}
+      <div className="flex w-full lg:w-80">
+        <Card className="w-full h-auto sm:h-72">
+          <CardBody className="p-5 flex gap-5 flex-col w-full">
+            <div className="flex w-full justify-between">
+              <p className="text-lg">Sub-total</p>
+              <p className="text-lg">{USDollar.format(subTotal)}</p>
+            </div>
+  
+            <div className="flex w-full justify-between">
+              <p className="text-lg">Taxes</p>
+              <p className="text-lg">$ 0</p>
+            </div>
+  
+            <div className="flex w-full justify-between">
+              <p className="text-xl font-bold">Total</p>
+              <p className="text-xl font-bold">{USDollar.format(subTotal)}</p>
+            </div>
+  
+            <div className="gap-3 flex flex-col pt-10">
+              <Button color="secondary" onPress={() => handlePayment()} className="w-full">
+                Proceed to payment
+              </Button>
+  
+              <Button color="primary" className="w-full">
+                Continue buy
+              </Button>
+            </div>
+          </CardBody>
+        </Card>
       </div>
-    </div >
+  
+    </div>
+  </div>
 
 
 
