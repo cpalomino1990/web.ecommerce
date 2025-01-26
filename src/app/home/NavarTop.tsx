@@ -14,13 +14,10 @@ const NavarTop = () => {
 
     const { getCartCount } = useStoreContext();
 
-
     return (
         <Navbar position='sticky' className='bg-white'>
             <NavbarBrand onClick={() => router.push('/home')}>
-
                 <p className="text-primary cursor-pointer hover:text-secondary font-bold text-4xl text-inherit">
-
                     Lisa
                 </p>
             </NavbarBrand>

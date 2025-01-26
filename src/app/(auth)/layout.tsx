@@ -1,6 +1,6 @@
 'use client'
 import { Image } from '@heroui/react';
-import React from 'react'
+import React, { Suspense } from 'react'
 
 const LayoutAuth = ({
     children,
@@ -15,7 +15,10 @@ const LayoutAuth = ({
                 </Image>
             </div>
             <div className="flex w-full justify-center">
-                {children}
+                <Suspense >
+                    {children}
+                </Suspense>
+
             </div>
         </div>
     )

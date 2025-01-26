@@ -15,6 +15,7 @@ export type StoreContext = {
     addToCart: (item: CartItem) => void;
     getCartCount: () => number;
     removeFromCart: (item: string) => void;
+    getCartTotal: () => number;
 }
 
 export const defaultStoreContext: StoreContext = {
@@ -22,6 +23,7 @@ export const defaultStoreContext: StoreContext = {
     addToCart: () => { },
     getCartCount: () => 0,
     removeFromCart: () => { },
+    getCartTotal: () => 0,
 };
 
 export const StoreContext = createContext<StoreContext>(defaultStoreContext);
