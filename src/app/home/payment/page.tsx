@@ -16,17 +16,17 @@ const PaymentPAge = () => {
     });
 
     return (
-        <div className="flex flex-col w-full px-5 py-10  md:px-32 md:py-20 gap-1">
-            <h2 className="px-5  text-3xl flex font-semibold mb-10  text-pink" > Payment</h2>
+        <div className="flex flex-col w-full  px-32 py-20 gap-1">
+            <h2 className="text-3xl flex font-semibold mb-10  text-pink" > Payment</h2>
 
 
-            <div className='flex flex-col md:flex-row w-full gap-5'>
+            <div className='flex w-full gap-5'>
 
                 <div className='flex w-full'>
                     <Accordion selectedKeys="all" selectionMode="multiple" variant="splitted">
                         <AccordionItem className='font-bold flex flex-col w-full ' key="1" aria-label="Accordion 1" title="Dirección">
 
-                            <div className='flex flex-col gap-5 md:flex-row w-full justify-between px-10 py-5'>
+                            <div className='flex w-full justify-between px-10 py-5'>
 
                                 <div className='w-full'>
                                     <p className=' font-bold'>Dirección de entrega</p>
@@ -115,10 +115,10 @@ const PaymentPAge = () => {
                 </div>
 
             </div>
-
-
         </div>
-    )
+    </div >
+      )
+
 }
 
 export default PaymentPAge
