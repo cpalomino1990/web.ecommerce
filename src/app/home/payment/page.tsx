@@ -116,8 +116,7 @@ const PaymentPAge = () => {
 
             </div>
         </div>
-    </div >
-      )
+    )
 
 }
 
