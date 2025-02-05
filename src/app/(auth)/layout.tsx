@@ -9,7 +9,7 @@ const LayoutAuth = ({
 }>) => {
     return (
         <div className="flex  justify-center items-center h-screen bg-purple-100">
-            <div className='flex items-center h-screen justify-center w-full bg-[#e7cdff]'>
+            <div className='hidden md:flex items-center h-screen justify-center w-full bg-[#e7cdff]'>
                 <Image alt='image' src='/images/ecommerce.png'
                     height={600}>
                 </Image>

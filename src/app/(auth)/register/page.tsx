@@ -37,7 +37,7 @@ const RegisterPage = () => {
 
 
     return (
-        <div className="flex w-full flex-col gap-5 px-60">
+        <div className="flex flex-col gap-5 px-5  w-full md:w-2/3">
             <div className="text-2xl font-bold text-center mb-5 text-black">
                 Create Account
             </div>

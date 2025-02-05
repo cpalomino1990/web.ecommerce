@@ -10,7 +10,7 @@ const layout = ({
 
     return (
         <StoreProvider>
-            <div className='h-screen bg-[#f9fbfc]'>
+            <div className='h-screen bg-[#fbfbfb]'>
                 <NavarTop />
 
                 <div>{children}</div>

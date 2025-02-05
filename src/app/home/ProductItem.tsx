@@ -39,13 +39,13 @@ const ProductItem = ({ product }: { product: Product }) => {
                         width="100%"
                     />
                 </CardBody>
-                <CardFooter className="text-small flex-col justify-between gap-3 p-3">
+                <CardFooter className="text-small bg-pink-50 flex-col justify-between gap-3 p-3">
                     <div className="flex flex-col sm:flex-row justify-center w-full gap-2">
                         <p className="text-xl text-ellipsis w-full sm:w-auto truncate">{product.name}</p>
                     </div>
                     <b className="text-default-500 text-lg">{`$ ${product.price}`}</b>
                     <div className="flex justify-between w-full gap-3 mt-3">
-                        <Button onPress={() => handleAddToCart()} color="primary" className="w-full sm:w-auto">
+                        <Button onPress={() => handleAddToCart()} color="primary" className="w-full ">
                             Add to cart
                         </Button>
                     </div>
