@@ -3,7 +3,7 @@ import { db } from "./auth";
 import { Product } from "@/models/product";
 
 
-export const getProducts = async (Component: unknown, pageProps: any): Promise<{ data: Product[]; lastVisible: number }> => {
+export const getProducts = async (): Promise<{ data: Product[]; lastVisible: number }> => {
 
     try {
 

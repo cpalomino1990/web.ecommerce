@@ -8,7 +8,7 @@ import Script from 'next/script'
 
 const HomePage = async () => {
 
-    const response = await getProducts('arg1', 'arg2');
+    const response = await getProducts();
 
     return (
         <div className='flex flex-col gap-32 h-full'>
