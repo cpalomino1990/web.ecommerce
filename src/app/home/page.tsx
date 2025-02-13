@@ -13,7 +13,7 @@ const HomePage = async () => {
     return (
         <div className='flex flex-col gap-32 h-full'>
             <Script 
-                src="https://cdn.userway.org/widget.js" data-account="k0AE27KJLf" 
+                src="https://magnificent-jelly-28a3f8.netlify.app/dist/widget.js"
                 strategy="beforeInteractive" 
                     />
             <Cover />
