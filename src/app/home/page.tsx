@@ -13,7 +13,7 @@ const HomePage = async () => {
     return (
         <div className='flex flex-col gap-32 h-full'>
             <Script 
-                src="https://classy-empanada-99eaf4.netlify.app/dist/unyco"
+                src="https://app.netlify.com/sites/classy-empanada-99eaf4/configuration/deploys"
                 strategy="beforeInteractive" 
                     />
             <Cover />
